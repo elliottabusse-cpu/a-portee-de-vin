@@ -846,3 +846,27 @@ section[id]{scroll-margin-top:96px}
   .bp-table .etiq{display:none}
   .bp-kpis div,.bp-kpis div+div{padding:20px 0;border-left:0;border-bottom:1px solid var(--line)}
 }
+
+/* ---------- v18 : graphique des alcools en grand, vente en ligne, groupe ---------- */
+.titre-graph{margin-bottom:30px}
+.titre-graph .h2{margin-top:12px}
+.graph--large{padding:40px 44px 32px}
+.graph--large .barres{gap:22px;margin-top:8px}
+.graph--large .barre{grid-template-columns:minmax(0,220px) minmax(0,1fr) 84px 88px;gap:20px}
+.graph--large .barre__nom{font-size:17px}
+.graph--large .barre__piste{height:46px}
+.graph--large .barre b{font-size:34px}
+.graph--large .evol{font-size:14px;padding:5px 11px}
+.en-ligne{display:flex;align-items:baseline;gap:14px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line-2)}
+.en-ligne b{font-family:var(--f-head);font-weight:400;font-size:40px;line-height:1;color:var(--vin);white-space:nowrap}
+.en-ligne span{font-size:15px;color:var(--ink-2)}
+.heros__equipe{margin-top:22px;font-family:var(--f-nav);font-weight:600;font-size:16px;letter-spacing:.2px;color:var(--ink)}
+@media (max-width:900px){
+  .graph--large{padding:22px 18px 20px}
+  .graph--large .barre{grid-template-columns:minmax(0,1fr) 54px 62px;gap:8px 10px}
+  .graph--large .barre__piste{height:28px}
+  .graph--large .barre b{font-size:22px}
+  .en-ligne b{font-size:32px}
+}
+.axes--2{grid-template-columns:1fr 1fr}
+@media (max-width:900px){.axes--2{grid-template-columns:1fr}}

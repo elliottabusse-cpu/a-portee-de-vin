@@ -185,7 +185,8 @@
     var ecran = $('.iphone__ecran', demo), doigt = $('.doigt', demo), badge = $('.panier i', demo);
     var btnsEtape = $$('.etapes button', demo), vues = $$('.vue', demo), barres = $$('.etapes .barre', demo);
     var timers = [], auto = !calme, courant = -1, lecture = $('[data-ctrl="lecture"]', demo);
-    var DUREES = [4200, 4200, 4600, 4600];
+    var T = vues.map(function (v) { return v.dataset.vue; });
+    var DUREES = { choix: 4200, age: 4600, paie: 4200, retrait: 4600 };
     function plus(f, ms) { timers.push(setTimeout(f, ms)); }
     function stop() { timers.forEach(clearTimeout); timers = []; }
     function viser(el, tap) {
@@ -199,17 +200,17 @@
     }
     function reinit(i) {
       var v = vues[i];
-      if (i === 0) { badge.classList.remove('on'); $$('.ajout', v).forEach(function (b) { b.classList.remove('fait'); b.textContent = 'Ajouter'; }); }
-      if (i === 1) { $('.app-btn', v).hidden = false; var et = $('.etat', v); et.classList.remove('on'); et.innerHTML = '<span class="spin"></span>Paiement en cours'; }
-      if (i === 2) { $('.coche', v).classList.remove('on'); $('.statut-age', v).textContent = 'Lecture de la pièce d’identité…'; }
-      if (i === 3) { $('.mini-cave', v).classList.remove('ouvre'); }
+      if (T[i] === 'choix') { badge.classList.remove('on'); $$('.ajout', v).forEach(function (b) { b.classList.remove('fait'); b.textContent = 'Ajouter'; }); }
+      if (T[i] === 'paie') { $('.app-btn', v).hidden = false; var et = $('.etat', v); et.classList.remove('on'); et.innerHTML = '<span class="spin"></span>Paiement en cours'; }
+      if (T[i] === 'age') { $('.coche', v).classList.remove('on'); $('.statut-age', v).textContent = 'Lecture de la pièce d’identité…'; }
+      if (T[i] === 'retrait') { $('.mini-cave', v).classList.remove('ouvre'); }
     }
     function etatFinal(i) {
       var v = vues[i];
-      if (i === 0) { badge.classList.add('on'); var a = $('.ajout', v); a.classList.add('fait'); a.textContent = 'Ajouté'; }
-      if (i === 1) { $('.app-btn', v).hidden = true; var et = $('.etat', v); et.classList.add('on'); et.textContent = 'Paiement accepté'; }
-      if (i === 2) { $('.coche', v).classList.add('on'); $('.statut-age', v).textContent = 'Majorité vérifiée'; }
-      if (i === 3) { $('.mini-cave', v).classList.add('ouvre'); }
+      if (T[i] === 'choix') { badge.classList.add('on'); var a = $('.ajout', v); a.classList.add('fait'); a.textContent = 'Ajouté'; }
+      if (T[i] === 'paie') { $('.app-btn', v).hidden = true; var et = $('.etat', v); et.classList.add('on'); et.textContent = 'Paiement accepté'; }
+      if (T[i] === 'age') { $('.coche', v).classList.add('on'); $('.statut-age', v).textContent = 'Majorité vérifiée'; }
+      if (T[i] === 'retrait') { $('.mini-cave', v).classList.add('ouvre'); }
     }
     function montrer(i) {
       vues.forEach(function (v, k) { v.classList.toggle('on', k === i); v.classList.toggle('sortie', k === courant && k !== i); v.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
@@ -221,27 +222,27 @@
       stop(); reinit(i); montrer(i);
       if (calme) { etatFinal(i); doigt.classList.remove('on'); return; }
       var v = vues[i], barre = barres[i];
-      if (auto) { requestAnimationFrame(function () { barre.style.transition = 'width ' + DUREES[i] + 'ms linear'; barre.style.width = '100%'; }); }
-      if (i === 0) {
+      if (auto) { requestAnimationFrame(function () { barre.style.transition = 'width ' + DUREES[T[i]] + 'ms linear'; barre.style.width = '100%'; }); }
+      if (T[i] === 'choix') {
         var a = $('.ajout', v);
         plus(function () { viser(a, true); }, 500);
         plus(function () { a.classList.add('fait'); a.textContent = 'Ajouté'; badge.classList.add('on'); }, 1350);
         plus(function () { viser($('.app-btn', v), true); }, 2100);
       }
-      if (i === 1) {
+      if (T[i] === 'paie') {
         plus(function () { viser($('.app-btn', v), true); }, 600);
         plus(function () { $('.app-btn', v).hidden = true; $('.etat', v).classList.add('on'); doigt.classList.remove('on'); }, 1450);
         plus(function () { $('.etat', v).textContent = 'Paiement accepté'; }, 2700);
       }
-      if (i === 2) {
+      if (T[i] === 'age') {
         doigt.classList.remove('on');
         plus(function () { $('.coche', v).classList.add('on'); $('.statut-age', v).textContent = 'Majorité vérifiée'; }, 3300);
       }
-      if (i === 3) {
+      if (T[i] === 'retrait') {
         plus(function () { viser($('.code', v), false); }, 300);
         plus(function () { doigt.classList.remove('on'); $('.mini-cave', v).classList.add('ouvre'); }, 1400);
       }
-      if (auto) plus(function () { jouer((i + 1) % vues.length); }, DUREES[i]);
+      if (auto) plus(function () { jouer((i + 1) % vues.length); }, DUREES[T[i]]);
     }
     btnsEtape.forEach(function (b, i) {
       b.addEventListener('click', function () { auto = false; lecture.textContent = 'Lecture automatique'; jouer(i); });
@@ -267,13 +268,13 @@
   if (sim) {
     var scen = {
       prudent: { prix: 11, marge: 30, casier: 1300, autres: 400 },
-      central: { prix: 15, marge: 40, casier: 1230, autres: 200 },
+      notre: { prix: 15, marge: 40, casier: 238, autres: 250 },
       optimiste: { prix: 19, marge: 45, casier: 238, autres: 100 }
     };
     var el = function (id) { return document.getElementById(id); };
     var eur = function (v) { return fmt(v, v % 1 ? 2 : 0) + ' €'; };
     var eur2 = function (v) { return fmt(v, 2) + ' €'; };
-    var affiche = 286;
+    var affiche = 98;
     function anime(vers) {
       var de = affiche; affiche = vers;
       if (calme) { el('seuil').textContent = fmt(vers); return; }
@@ -282,9 +283,9 @@
       requestAnimationFrame(pas);
     }
     function calcul() {
-      var prix = +el('prix').value, marge = +el('marge').value / 100, casier = +$('input[name=casier]:checked').value, autres = +el('autres').value;
+      var prix = +el('prix').value, marge = +el('marge').value / 100, casier = +$('input[name=casier]:checked').value, autres = +el('autres').value, salaire = +$('input[name=salaire]:checked').value;
       el('o-prix').textContent = eur(prix); el('o-marge').textContent = fmt(marge * 100) + ' %'; el('o-autres').textContent = eur(autres);
-      var ht = prix / 1.2, tva = prix - ht, mb = ht * marge, achat = ht - mb, cf = casier + autres;
+      var ht = prix / 1.2, tva = prix - ht, mb = ht * marge, achat = ht - mb, cf = casier + autres + salaire;
       var n = Math.ceil(cf / mb - 1e-9), jour = n / 30;
       anime(n);
       el('r-jour').textContent = fmt(jour, jour < 10 ? 1 : 0) + ' bouteilles';
@@ -292,7 +293,8 @@
       el('r-ca').textContent = fmt(Math.round(n * prix)) + ' € TTC par mois';
       el('b-tva').style.flexGrow = tva; el('b-achat').style.flexGrow = achat; el('b-marge').style.flexGrow = mb;
       el('l-tva').textContent = eur2(tva); el('l-achat').textContent = eur2(achat); el('l-marge').textContent = eur2(mb);
-      el('c-couts').innerHTML = fmt(casier) + ' € de casier + ' + fmt(autres) + ' € d’autres coûts = <b>' + fmt(cf) + ' €</b>';
+      el('c-couts').innerHTML = fmt(casier) + ' € de casier + ' + fmt(autres) + ' € d’autres coûts' + (salaire ? ' + ' + fmt(salaire) + ' € de salaire' : '') + ' = <b>' + fmt(cf) + ' €</b>';
+      el('r-unite').textContent = salaire ? 'bouteilles à vendre chaque mois pour payer le casier et un salaire' : 'bouteilles à vendre chaque mois pour payer le casier';
       el('c-seuil').innerHTML = fmt(cf) + ' € ÷ ' + eur2(mb) + ' de marge = <b>' + fmt(n) + ' bouteilles</b>';
       var k = Math.min(40, Math.ceil(jour)), html = '';
       for (var i = 0; i < k; i++) html += '<img src="assets/img/bouteille-rouge.png" alt=""' + (i === k - 1 && jour % 1 && jour < 40 ? ' class="partielle"' : '') + '>';
@@ -307,7 +309,7 @@
       calcul();
     }
     $$('.scenarios button').forEach(function (b) { b.addEventListener('click', function () { appliquer(b.dataset.sc); }); });
-    $$('input', sim).forEach(function (i) { i.addEventListener('input', function () { $$('.scenarios button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); }); calcul(); }); });
+    $$('input', sim).forEach(function (i) { i.addEventListener('input', function () { if (i.name !== 'salaire') $$('.scenarios button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); }); calcul(); }); });
     calcul();
   }
 })();
