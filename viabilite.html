@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La viabilité · À portée de vin</title>
+<meta name="description" content="Le modèle économique du casier : un simulateur et ses limites.">
+<meta name="theme-color" content="#F6F2EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Figtree:wght@400;500;600&family=Nunito:wght@400;700&family=Azeret+Mono:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="voile-page" aria-hidden="true"></div>
+<p class="legal-top">La vente d'alcool est interdite aux mineurs de moins de 18 ans · <b>Projet d'étude, sans vente réelle</b></p>
+<header class="entete">
+  <div class="wrap entete__corps">
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="tiroir"><span></span><span></span><span></span></button>
+    <ul class="nav"><li><a href="constat.html">Le constat</a></li><li><a href="loi.html">La loi</a></li><li><a href="concept.html">Le concept</a></li><li><a href="viabilite.html" aria-current="page">La viabilité</a></li></ul>
+    <a class="logo" href="index.html" aria-label="Accueil"><b>à portée de vin</b><small>Le vin en click and collect</small></a>
+    <div class="entete__droite"><a href="sources.html">Sources</a><a href="sources.html#credits">Crédits</a></div>
+  </div>
+</header>
+<nav class="tiroir" id="tiroir" aria-label="Menu"><a href="constat.html">Le constat</a><a href="loi.html">La loi</a><a href="concept.html">Le concept</a><a href="viabilite.html">La viabilité</a><a href="sources.html">Sources</a></nav>
+<main>
+<section class="heros">
+  <div class="heros__texte">
+    <span class="eyebrow">Casier 4 sur 4 · La viabilité</span>
+    <h1>Ce qu'il reste à <em>prouver</em>.</h1>
+    <p class="heros__lead">Avec les données disponibles, la rentabilité du casier ne peut être ni démontrée ni exclue. Tout tient à une question : combien de bouteilles faut-il vendre chaque mois pour payer le casier ?</p>
+    
+  </div>
+  <figure class="heros__media"><img src="assets/img/calculatrice.jpg" alt="" style="object-position:center"></figure>
+</section>
+
+<section class="section section--blanc">
+  <div class="wrap">
+    <div class="tete-sec revele"><div><span class="eyebrow">Le simulateur</span><h2 class="h2">Combien de bouteilles faut-il vendre ?</h2></div><p>Réglez le prix, la marge et les coûts : le simulateur calcule le nombre de bouteilles à vendre chaque mois pour payer le casier. Chaque réglage est expliqué en une ligne.</p></div>
+    <div class="simu" id="simulateur">
+      <div class="reglages">
+        <div class="scenarios" role="group" aria-label="Réglages tout prêts"><button type="button" data-sc="prudent" aria-pressed="false">Prudent</button><button type="button" data-sc="central" aria-pressed="true">Central</button><button type="button" data-sc="optimiste" aria-pressed="false">Optimiste</button></div>
+        <p class="note note--scen">Trois réglages tout prêts, du plus défavorable au plus favorable. Vous pouvez ensuite tout modifier.</p>
+        <div class="reglage"><label for="prix">Prix d'une bouteille <output id="o-prix" for="prix">15 €</output></label><input type="range" id="prix" min="5" max="25" step="0.5" value="15"><p class="note"><b>Ce que paie le client</b>, TVA de 20 % comprise.<a class="src" href="sources.html#s110" title="Source S110">S110</a> Repères : 11 € pour un rosé, 19 € pour un rouge chez un caviste.<a class="src" href="sources.html#s108" title="Source S108">S108</a></p></div>
+        <div class="reglage"><label for="marge">Marge brute <output id="o-marge" for="marge">40 %</output></label><input type="range" id="marge" min="25" max="50" step="1" value="40"><p class="note"><b>Ce qui nous reste</b> sur le prix hors TVA, une fois le vin payé au domaine. Repère : 40 % dans le réseau Nicolas.<a class="src" href="sources.html#s86" title="Source S86">S86</a></p></div>
+        <div class="reglage"><fieldset><legend>Coût du casier par mois</legend>
+          <div class="choix"><label><input type="radio" name="casier" value="1300"><span>Location 1 300 €</span></label><label><input type="radio" name="casier" value="1230" checked><span>Location 1 230 €</span></label><label><input type="radio" name="casier" value="238"><span>Achat 238 €</span></label></div>
+          <p class="note"><b>Louer</b> le casier au prix de Cave O Vin<a class="src" href="sources.html#s10" title="Source S10">S10</a>, ou <b>l'acheter</b> 20 000 €, le milieu de la fourchette des casiers réfrigérés (15 000 à 25 000 €)<a class="src" href="sources.html#s81" title="Source S81">S81</a>, et étaler ce prix sur 7 ans <span class="etiq etiq--hyp">hypothèse</span></p></fieldset></div>
+        <div class="reglage"><label for="autres">Autres coûts par mois <output id="o-autres" for="autres">200 €</output></label><input type="range" id="autres" min="100" max="400" step="50" value="200"><p class="note"><b>Tout le reste</b> : loyer ou commission de l'hôte, électricité, logiciel, assurance, entretien <span class="etiq etiq--hyp">hypothèse</span></p></div>
+      </div>
+      <div class="resultat" aria-live="polite">
+        <span class="mono resultat__titre">Résultat</span>
+        <div class="grand" id="seuil">286</div>
+        <div class="unite">bouteilles à vendre chaque mois pour payer le casier</div>
+        <div class="btl-jour" id="btl-jour" aria-hidden="true"></div>
+        <p id="btl-txt">Une bouteille dessinée = une bouteille vendue par jour.</p>
+        <dl><div><dt>Par jour</dt><dd id="r-jour">9,5 bouteilles</dd></div><div><dt>Remplissages d'un casier de 42 bouteilles<a class="src" href="sources.html#s10" title="Source S10">S10</a></dt><dd id="r-rempl">6,8 par mois</dd></div><div><dt>Ventes à réaliser</dt><dd id="r-ca">4 290 € TTC par mois</dd></div></dl>
+        <p class="verdict-sim">Aucun casier ne publie ses ventes, pas même Cave O Vin : le volume reste la grande inconnue du projet.</p>
+      </div>
+      <div class="calcul">
+        <span class="eyebrow">Le calcul, en trois étapes</span>
+        <ol>
+          <li><span class="n">1</span><div><h4>Ce qui reste sur une bouteille</h4>
+            <div class="mini-barre" aria-hidden="true"><span class="seg seg--tva" id="b-tva" style="flex:2.5"></span><span class="seg seg--achat" id="b-achat" style="flex:7.5"></span><span class="seg seg--marge" id="b-marge" style="flex:5"></span></div>
+            <p class="legende-barre"><span><i class="k k--tva"></i>TVA <b id="l-tva">2,50 €</b></span><span><i class="k k--achat"></i>Achat au domaine <b id="l-achat">7,50 €</b></span><span><i class="k k--marge"></i>Notre marge <b id="l-marge">5,00 €</b></span></p></div></li>
+          <li><span class="n">2</span><div><h4>Les coûts du mois</h4><p id="c-couts">1 230 € de casier + 200 € d'autres coûts = <b>1 430 €</b></p></div></li>
+          <li><span class="n">3</span><div><h4>Les bouteilles à vendre</h4><p id="c-seuil">1 430 € ÷ 5,00 € de marge = <b>286 bouteilles</b></p></div></li>
+        </ol>
+      </div>
+    </div>
+    <p class="limite">Selon les trois réglages tout prêts, il faut de 48 à 619 bouteilles par mois : c'est d'abord le coût du casier qui fait varier le résultat, puis le prix et la marge. Le prix d'achat du casier vient de casiers réfrigérés pour fruits et légumes : c'est une analogie.</p>
+  </div>
+</section>
+
+<section class="section" id="previsionnel">
+  <div class="wrap">
+    <div class="tete-sec revele"><div><span class="eyebrow">Le business plan</span><h2 class="h2">Un casier à Bordeaux, sa première année</h2></div><p>Un casier acheté, des bouteilles à 15 € et 40 % de marge. Seul le nombre de bouteilles vendues change d'un scénario à l'autre : c'est la donnée qu'aucune source ne publie.</p></div>
+    <div class="bp revele">
+      <table class="bp-table">
+        <thead><tr><th scope="col"><span class="sr">Poste</span></th><th scope="col">Prudent</th><th scope="col" class="bp-central">Central</th><th scope="col">Optimiste</th></tr></thead>
+        <tbody>
+          <tr class="bp-hyp"><th scope="row">Bouteilles vendues par mois <span class="etiq etiq--hyp">hypothèse</span></th><td>150</td><td class="bp-central">300</td><td>450</td></tr>
+          <tr><th scope="row">Chiffre d'affaires TTC, à 15 € la bouteille<a class="src" href="sources.html#s108" title="Source S108">S108</a></th><td>27 000 €</td><td class="bp-central">54 000 €</td><td>81 000 €</td></tr>
+          <tr><th scope="row">Chiffre d'affaires hors TVA<a class="src" href="sources.html#s110" title="Source S110">S110</a></th><td>22 500 €</td><td class="bp-central">45 000 €</td><td>67 500 €</td></tr>
+          <tr class="bp-moins"><th scope="row">Achat du vin aux domaines (60 % du prix hors TVA)</th><td>−13 500 €</td><td class="bp-central">−27 000 €</td><td>−40 500 €</td></tr>
+          <tr class="bp-sous"><th scope="row">Marge brute (40 %)<a class="src" href="sources.html#s86" title="Source S86">S86</a></th><td>9 000 €</td><td class="bp-central">18 000 €</td><td>27 000 €</td></tr>
+          <tr class="bp-moins"><th scope="row">Casier acheté 20 000 €, réparti sur 7 ans<a class="src" href="sources.html#s81" title="Source S81">S81</a></th><td>−2 857 €</td><td class="bp-central">−2 857 €</td><td>−2 857 €</td></tr>
+          <tr class="bp-moins"><th scope="row">Autres frais, 200 € par mois <span class="etiq etiq--hyp">hypothèse</span></th><td>−2 400 €</td><td class="bp-central">−2 400 €</td><td>−2 400 €</td></tr>
+          <tr class="bp-total"><th scope="row">Résultat avant rémunération</th><td>3 743 €</td><td class="bp-central">12 743 €</td><td>21 743 €</td></tr>
+          <tr class="bp-alt"><th scope="row">Le même avec un casier loué 1 230 € par mois<a class="src" href="sources.html#s10" title="Source S10">S10</a></th><td>−8 160 €</td><td class="bp-central">840 €</td><td>9 840 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bp-kpis">
+      <div class="revele"><b>20 315 €</b><span>à investir au départ : le casier (20 000 €)<a class="src" href="sources.html#s81" title="Source S81">S81</a> et un premier stock de 42 bouteilles (315 €).<a class="src" href="sources.html#s10" title="Source S10">S10</a></span></div>
+      <div class="revele"><b>37, 16 ou 10 mois</b><span>pour rembourser cet investissement, selon le scénario (calcul, avant rémunération).</span></div>
+      <div class="revele"><b>462 bouteilles</b><span>par mois pour se verser l'équivalent d'un Smic brut (1 867 € par mois)<a class="src" href="sources.html#s121" title="Source S121">S121</a> avec un casier acheté ; 660 avec un casier loué.</span></div>
+    </div>
+    <div class="prose revele" style="margin-top:40px;max-width:52em"><p><strong>Ce que montre le prévisionnel.</strong> Acheté, le casier couvre ses coûts dès 88 bouteilles par mois ; loué, il en faut 286. Mais même le scénario optimiste, 450 bouteilles par mois, ne paie pas tout à fait un Smic brut : la rentabilité du concept se joue sur un réseau de plusieurs casiers.</p></div>
+    <p class="limite">Hors impôts, cotisations sociales, frais de paiement en ligne, droits d'accise et installation du casier. Le prix d'achat du casier vient de casiers réfrigérés pour fruits et légumes (15 000 à 25 000 €, matériel seul) : c'est une analogie, et nous retenons le milieu de la fourchette. Les volumes sont des hypothèses : avant d'acheter, un test de quatre semaines, avec retrait au comptoir d'un commerçant partenaire, permettrait de les mesurer.</p>
+    <div class="retenir revele"><svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 38c0-12 6-20 16-24M30 38c0-12 6-20 16-24"/><circle cx="14" cy="40" r="6"/><circle cx="36" cy="40" r="6"/></svg><div><span class="eyebrow">Ce que nous en retenons</span><p>Un casier acheté couvre ses coûts dès 88 bouteilles par mois, mais il ne paie un salaire qu'à partir de 462. Le concept ne sera rentable qu'avec plusieurs casiers : c'est ce réseau qu'il faudra financer, une fois la demande mesurée.</p></div></div>
+  </div>
+</section>
+<section class="suivant suivant--fin">
+  <div class="suivant__texte"><span class="eyebrow">Fin de la visite</span><h2>Rouvrir un casier, ou vérifier nos sources</h2><a class="lien-fleche" href="sources.html">Les 52 sources</a><p class="note">Cliquez sur une cave pour revenir à son chapitre.</p></div>
+  <div class="suivant__cave suivant__cave--mur" data-hrefs="constat.html,loi.html,concept.html,viabilite.html"><img class="cave__secours" src="assets/img/cave-rendu.jpg" alt="" loading="lazy"></div>
+</section>
+</main>
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__grille">
+      <div><a class="logo" href="index.html" aria-label="Accueil"><b>à portée de vin</b><small>Le vin en click and collect</small></a><p>Projet marketing du Master Sciences de la Vigne et du Vin, parcours Commerce et Marketing des Vins (ISVV / IAE Bordeaux), novembre 2026. Elliot Tabusse.</p></div>
+      <div><h4>Les casiers</h4><ul><li><a href="constat.html">1. Le constat</a></li><li><a href="loi.html">2. La loi</a></li><li><a href="concept.html">3. Le concept</a></li><li><a href="viabilite.html">4. La viabilité</a></li></ul></div>
+      <div><h4>Vérifier</h4><ul><li><a href="sources.html">Les 52 sources</a></li><li><a href="sources.html#credits">Crédits photos et vidéos</a></li></ul></div>
+      <div><h4>Cadre</h4><ul><li>Projet étudiant</li><li>Sans activité commerciale</li><li>Aucune vente réelle</li></ul></div>
+    </div>
+    <div class="pied__bas"><span>L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</span><span>Photos et vidéos : Pexels · Bouteilles et caves : rendus 3D</span></div>
+  </div>
+</footer>
+<p class="evin-bas">L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
+<div class="modal" id="age" role="dialog" aria-modal="true" aria-labelledby="age-titre" aria-hidden="true">
+  <div class="modal__voile"></div>
+  <div class="modal__boite">
+    <span class="logo" aria-label="Accueil"><b>à portée de vin</b><small>Le vin en click and collect</small></span>
+    <h2 id="age-titre">Avez-vous 18 ans ou plus ?</h2>
+    <p>Ce site parle de vin. La vente d'alcool est interdite aux mineurs de moins de 18 ans.</p>
+    <div class="rangee"><button class="btn" type="button" data-age="oui">Oui, j'ai 18 ans ou plus</button><button class="btn btn--ghost" type="button" data-age="non">Non</button></div>
+    <p class="refus" hidden>Ce site est réservé aux personnes majeures.</p>
+    <small>Projet d'étude, sans vente réelle · L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</small>
+  </div>
+</div>
+<script src="assets/js/scene3d.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
